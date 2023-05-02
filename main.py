@@ -15,6 +15,10 @@ if __name__ == '__main__':
 			# Capture frame-by-frame
 			ret, frame = cap.read()
 
+			# Detect pose landmarks
+			frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+			results = pose.process(frame_rgb)
+
 			# If frame is read correctly ret is True
 			if not ret:
 				print("Can't receive frame. Exiting...")
