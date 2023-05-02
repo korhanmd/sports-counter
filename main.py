@@ -24,6 +24,12 @@ if __name__ == '__main__':
 				print("Can't receive frame. Exiting...")
 				break
 
+			mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
+                                mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2),
+                                mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
+                                )
+
+
 			# Display the frame
 			cv2.imshow('frame', frame)
 
