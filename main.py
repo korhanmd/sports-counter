@@ -41,7 +41,9 @@ if __name__ == '__main__':
                                 mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2),
                                 mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
                                 )
-			
+
+			helper_functions.write_angle(frame, angle)
+
 			# Display the frame
 			cv2.imshow('frame', frame)
 
