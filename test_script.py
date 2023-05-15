@@ -1,4 +1,4 @@
-from helper_functions import *
+from helper_functions import calculate_angle
 
 class TestCalculateAngle:
     def test_1(self):
@@ -18,3 +18,4 @@ class TestCalculateAngle:
 
     def test_6(self):
         assert calculate_angle([1,-1],[0,0],[1,1]) == 90.0
+        
