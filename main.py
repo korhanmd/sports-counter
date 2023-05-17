@@ -44,6 +44,9 @@ if __name__ == '__main__':
 
                 angle_arms = helper_functions.calculate_angle(wrist_left, shoulder_left, wrist_right)
                 angle_legs = helper_functions.calculate_angle(ankle_left, hip_left, ankle_right)
+
+                helper_functions.write_angle(frame, angle_arms, (50, 50))
+                helper_functions.write_angle(frame, angle_legs, (50, 100))
             except:
                 pass
 
@@ -53,9 +56,6 @@ if __name__ == '__main__':
                                     mp_drawing.DrawingSpec(color=(245,66,230),
                                     thickness=2, circle_radius=2)
                                 )
-
-            helper_functions.write_angle(frame, angle_arms, (50, 50))
-            helper_functions.write_angle(frame, angle_legs, (50, 100))
 
 			# Display the frame
             cv2.imshow('frame', frame)
