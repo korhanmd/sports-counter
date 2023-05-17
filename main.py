@@ -34,9 +34,16 @@ if __name__ == '__main__':
                                   landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
                 wrist_right     = [landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].x,
                                   landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
+                
+                hip_left        = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
+                                  landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
+                ankle_left      = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
+                                  landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
+                ankle_right     = [landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].x,
+                                  landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].y]
 
-                angle = helper_functions.calculate_angle(wrist_left, shoulder_left, wrist_right)
-                print(angle)
+                angle_arms = helper_functions.calculate_angle(wrist_left, shoulder_left, wrist_right)
+                angle_legs = helper_functions.calculate_angle(ankle_left, hip_left, ankle_right)
             except:
                 pass
 
@@ -47,7 +54,8 @@ if __name__ == '__main__':
                                     thickness=2, circle_radius=2)
                                 )
 
-            helper_functions.write_angle(frame, angle)
+            helper_functions.write_angle(frame, angle_arms, (50, 50))
+            helper_functions.write_angle(frame, angle_legs, (50, 100))
 
 			# Display the frame
             cv2.imshow('frame', frame)
