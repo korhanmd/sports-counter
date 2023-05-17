@@ -2,10 +2,22 @@ import cv2
 import mediapipe as mp
 import helper_functions
 
+def get_current_state(current_state, angle1, angle2):
+    threshold1 = 180
+    threshold2 = 15
+
+    if current_state == "down" and angle1 >= threshold1 and angle2 >= threshold2:
+        current_state = "up"
+    elif current_state == "up" and angle1 < threshold1 and angle2 < threshold2:
+        current_state = "down"
+
+    return current_state
+
 if __name__ == '__main__':
     mp_drawing  = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
     cap = cv2.VideoCapture(0)
+    state = "down"
 
     if not cap.isOpened():
         print("Cannot open camera")
@@ -34,7 +46,7 @@ if __name__ == '__main__':
                                   landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
                 wrist_right     = [landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].x,
                                   landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
-                
+
                 hip_left        = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
                                   landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
                 ankle_left      = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
@@ -42,11 +54,17 @@ if __name__ == '__main__':
                 ankle_right     = [landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].x,
                                   landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].y]
 
-                angle_arms = helper_functions.calculate_angle(wrist_left, shoulder_left, wrist_right)
-                angle_legs = helper_functions.calculate_angle(ankle_left, hip_left, ankle_right)
+                angle_arms = helper_functions.calculate_angle(
+                    wrist_left, shoulder_left, wrist_right)
+                angle_legs = helper_functions.calculate_angle(
+                    ankle_left, hip_left, ankle_right)
+
+                state = get_current_state(state, angle_arms, angle_legs)
 
                 helper_functions.write_angle(frame, angle_arms, (50, 50))
                 helper_functions.write_angle(frame, angle_legs, (50, 100))
+                cv2.putText(frame, state, (50, 150), cv2.FONT_HERSHEY_SIMPLEX,
+                1, (255, 0, 0), 2, cv2.LINE_AA)
             except:
                 pass
 
