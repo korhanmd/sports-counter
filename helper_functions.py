@@ -6,12 +6,9 @@ def calculate_angle(point1, point2, point3):
                        - math.atan2(point1[1]-point2[1], point1[0]-point2[0]))
     return ang + 360 if ang < 0 else ang
 
-def write_angle(image, angle):
+def write_angle(image, angle, org):
 	# font
     font = cv2.FONT_HERSHEY_SIMPLEX
-
-	# org
-    org = (50, 50)
 
 	# fontScale
     font_scale = 1
