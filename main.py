@@ -13,7 +13,7 @@ def get_current_state(current_state, angle1, angle2):
 
     return current_state
 
-if __name__ == '__main__':
+def main():
     mp_drawing  = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
     cap = cv2.VideoCapture(0)
@@ -83,4 +83,6 @@ if __name__ == '__main__':
 
         cap.release()
         cv2.destroyAllWindows()
-        
+
+if __name__ == '__main__':
+    main()
