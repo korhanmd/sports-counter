@@ -2,14 +2,18 @@ import cv2
 import mediapipe as mp
 import helper_functions
 
+counter = 0
+
 def get_current_state(current_state, angle1, angle2):
     threshold1 = 180
     threshold2 = 15
+    global counter
 
     if current_state == "down" and angle1 >= threshold1 and angle2 >= threshold2:
         current_state = "up"
     elif current_state == "up" and angle1 < threshold1 and angle2 < threshold2:
         current_state = "down"
+        counter += 1
 
     return current_state
 
@@ -18,6 +22,7 @@ def main():
     mp_pose = mp.solutions.pose
     cap = cv2.VideoCapture(0)
     state = "down"
+    global counter
 
     if not cap.isOpened():
         print("Cannot open camera")
@@ -64,6 +69,8 @@ def main():
                 helper_functions.write_angle(frame, angle_arms, (50, 50))
                 helper_functions.write_angle(frame, angle_legs, (50, 100))
                 cv2.putText(frame, state, (50, 150), cv2.FONT_HERSHEY_SIMPLEX,
+                1, (255, 0, 0), 2, cv2.LINE_AA)
+                cv2.putText(frame, str(counter), (50, 200), cv2.FONT_HERSHEY_SIMPLEX,
                 1, (255, 0, 0), 2, cv2.LINE_AA)
             except:
                 pass
